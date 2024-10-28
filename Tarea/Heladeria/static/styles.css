@@ -1,0 +1,123 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff; /* Color celeste claro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero section styles */
+.hero-section {
+    background-image: url('/static/img/helado.jpg'); /* Asegúrate de tener una imagen en static/img */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 150px 20px;
+}
+
+.hero-section h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.hero-section p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    background-color: #ff69b4; /* Color rosa pastel */
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: scale(1.1);
+    background-color: #ff1493; /* Cambia a un rosa más fuerte */
+}
+
+/* Navbar styles */
+nav {
+    background-color: #ff69b4;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav a:hover {
+    color: #ff1493;
+}
+
+footer {
+    background-color: #ff69b4;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Make sure your footer sticks to the bottom */
+html, body {
+    height: 100%;
+}
+
+.content {
+    min-height: calc(100vh - 50px); /* Ensure footer doesn't overlap */
+}
+
+/* Adding some animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.hero-section h1, .hero-section p, .cta-button {
+    animation: fadeIn 2s;
+}
+
+
+.hero-section {
+    background-image: url('{% static "gif-helado.gif" %}'); /* Cambia "fondo.gif" al nombre de tu archivo */
+    background-size: cover; /* Asegura que la imagen cubra toda la sección */
+    background-position: center; /* Centra la imagen */
+    height: 100vh; /* Altura de la sección */
+    display: flex; /* Para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    color: white; /* Color del texto */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra del texto para mejor legibilidad */
+}
+
+/* styles.css */
+
+/* Estilos para el contenido del encabezado */
+.header-content {
+    display: flex; /* Utiliza flexbox para alinear el contenido */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    margin-bottom: 20px; /* Espacio entre el encabezado y el resto del contenido */
+}
+
+
+
+.header-content .imagen-principal {
+    width: 70px; /* Ajusta el tamaño de la imagen principal */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Otras reglas CSS existentes */

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Pedido</title>
+    <link rel="icon" href="/static/dulces-helados-icono.ico" type="image/x-icon">
+    <style>
+        /* General styles */
+        body {
+            background-color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Navbar styles */
+        nav {
+            background-color: #ff69b4;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: background-color 0.5s ease;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 1em;
+        }
+
+        nav a:hover {
+            color: #ff1493;
+        }
+
+        .icono {
+            width: 75px;
+            height: auto;
+        }
+
+        /* Main container styles */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin-top: 60px;
+            padding: 20px;
+        }
+        .logo {
+            width: 50%; /* Ocupa la mitad de la pantalla */
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .content-box {
+            width: 70%;
+            max-width: 700px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            background-color: white;
+            background-size: cover;
+        }
+
+        .form-container h1 {
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container label {
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .form-container input, .form-container select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        .form-container button {
+            background-color: #ff1493;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            transform: scale(1.05);
+            background-color: #ff69b4;
+        }
+
+        footer {
+            background-color: #ff69b4;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: background-color 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .content-box {
+                width: 90%;
+            }
+            .logo {
+                width: 70%;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo {
+                width: 80%;
+            }        
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <img src="/static/dulces-helados-logo.png" alt="Heladería" class="icono" onclick="location.href='{% url 'ver_mis_pedidos'% cliente.id }'">
+        </div>
+        <div>
+            <a href="{% url 'inicio' %}">Salir</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-container">
+        <div class="content-box">
+            <div class="form-container">
+                <h1>Crear Pedido</h1>
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="cliente" value="{{ cliente.id}} ">
+
+                    <label for="cantidad">Cantidad</label>
+                    <select id="cantidad" name="cantidad" required>
+                        {% for cantidad in cantidades %}
+                            <option value="{{ cantidad.id }}">{{ cantidad.cantidad }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="helado">Helado</label>
+                    <select id="helado" name="helado" onchange="actualizarColores()" required>
+                        {% for helado in helados %}
+                            <option value="{{ helado.id }}" data-color="{{ helado.color }}">{{ helado.helado }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="salsa">Salsa</label>
+                    <select id="salsa" name="salsa" onchange="actualizarColores()" required>
+                        {% for salsa in salsas %}
+                            <option value="{{ salsa.id }}" data-color="{{ salsa.color }}">{{ salsa.salsa }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit">Crear Pedido</button>
+                    <br>
+                    <button type="button" onclick="location.href='{% url 'inicio' %}'">Volver atrás</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Dulces Helados. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function actualizarColores() {
+            const helado = document.getElementById('helado');
+            const heladoColor = helado.options[helado.selectedIndex].dataset.color;
+            const salsa = document.getElementById('salsa');
+            const salsaColor = salsa.options[salsa.selectedIndex].dataset.color;
+
+            if (heladoColor) {
+                document.body.style.backgroundColor = heladoColor;
+            }
+            if (salsaColor && salsaColor !== "#ffffff") {
+                document.querySelector('nav').style.backgroundColor = salsaColor;
+                document.querySelector('footer').style.backgroundColor = salsaColor;
+            } else {
+                document.querySelector('nav').style.backgroundColor = '#ff69b4';
+                document.querySelector('footer').style.backgroundColor = '#ff69b4';
+            }
+        }
+    </script>
+</body>
+</html>

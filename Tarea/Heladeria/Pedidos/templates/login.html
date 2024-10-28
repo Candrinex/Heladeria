@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulces Helados</title>
+    <link rel="icon" href="../../static/dulces-helados-icono.ico" type="image/x-icon">
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-image: url('../../static/imagen-helado.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Navbar styles */
+        nav {
+            background-color: #ff69b4; /* Color rosa */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 1em;
+        }
+
+        nav a:hover {
+            color: #ff1493; 
+        }
+
+        /* Hero section styles */
+        .hero-section {
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            color: white; 
+            text-align: center;
+            padding: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+        }
+
+        .hero-section h1 {
+            font-size: 3em;
+            margin: 10px 0;
+        }
+
+        /* Box container styles */
+        .box-container {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            margin: 20px; /* Espaciado alrededor de la caja */
+        }
+
+        .box {
+            background-color: rgba(255, 20, 147, 0.5); /* Rosa más oscuro con transparencia */
+            border-radius: 10px;
+            width: 80%; /* Ancho de las cajas */
+            padding: 20px;
+            margin: 0 15px; /* Espaciado entre cajas */
+            text-align: center;
+            transition: transform 0.3s ease; /* Transición para efecto de agrandamiento */
+        }
+
+        .box:hover {
+            transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
+        }
+
+        .box img {
+            width: 100%; /* Imagen ajustada al ancho de la caja */
+            border-radius: 10px; /* Bordes redondeados para la imagen */
+        }
+
+        .box-button {
+            background-color: #ff1493; /* Color rosa */
+            border: none;
+            padding: 10px 15px;
+            font-size: 15px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-top: 10px; /* Espaciado entre la imagen y el botón */
+        }
+
+        .box-button:hover {
+            transform: scale(1.1); /* Efecto de agrandamiento al pasar el mouse */
+            background-color: #ffccdd; /* Cambia a un rosa más claro */
+        }
+
+        .nav-button {
+            background-color: #ff1493; 
+            border: none;
+            padding: 10px 15px;
+            font-size: 15px;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.1);
+            background-color: #ffccdd;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #ff69b4; /* Color rosa */
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'inicio' %}">
+                <img src="../../static/dulces-helados-logo.png" alt="Heladería" class="icono" style="width: 75px;">
+            </a>
+        </div>
+    </nav>    
+    <div class="hero-section">
+        <h1>¿Quién eres?</h1>
+        <div class="box-container">
+            <div class="box">
+                <img src="../../static/empleado.png" alt="Empleado"> <!-- Ruta de imagen del empleado -->
+                <p>Empleado</p>
+                <button class="box-button" onclick="location.href='{% url 'empleado' %}'">Ir a Empleado</button>
+            </div>
+            <div class="box">
+                <img src="../../static/cliente.png" alt="Cliente"> <!-- Ruta de imagen del cliente -->
+                <p>Cliente</p>
+                <button class="box-button" onclick="location.href='{% url 'cliente' %}'">Ir a Cliente</button>
+            </div>
+        </div>
+        <button class="nav-button" onclick="history.back()">Volver atrás</button> <!-- Botón para volver -->
+    </div>
+    <footer>
+        <p>&copy; 2024 Dulces Helados. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

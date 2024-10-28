@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cliente</title>
+    <link rel="icon" href="../../static/dulces-helados-icono.ico" type="image/x-icon">
+    <style>
+        /* General styles */
+        body {
+            background-image: url('../../static/imagen-helado.png');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Navbar styles */
+        nav {
+            background-color: #ff69b4; /* Color rosa */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 1em;
+        }
+
+        nav a:hover {
+            color: #ff1493;
+        }
+
+        .icono {
+            width: 75px;
+            height: auto;
+        }
+
+        /* Main container styles */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin-top: 20px; /* Ajuste para compensar el navbar fijo */
+            padding: 20px;
+        }
+
+        .content-box {
+            display: flex;
+            width: 70%;
+            max-width: 1000px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .form-container {
+            width: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgba(255, 20, 147, 0.1);
+        }
+
+        .form-container h1 {
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container label {
+            font-size: 1em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .form-container input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        .form-container button {
+            background-color: #ff1493;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1em;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            transform: scale(1.05);
+            background-color: #ff69b4;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #ff69b4;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .content-box {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .form-container h1 {
+                font-size: 1.5em;
+            }
+
+            .form-container label, .form-container input {
+                font-size: 1em;
+            }
+
+            .form-container button {
+                padding: 10px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <a href="{% url 'inicio' %}">
+                <img src="../../static/dulces-helados-logo.png" alt="Heladería" class="icono">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-container">
+        <div class="content-box">
+            <!-- Form Section -->
+            <div class="form-container">
+                <h1>Crear Cuenta de Cliente</h1>
+                <form method="POST" action="{% url 'crear_cliente' %}">
+                    {% csrf_token %}
+                    <label for="usuario">Usuario</label>
+                    <input type="text" id="usuario" name="usuario" placeholder="Introduce tu usuario" required>
+
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Introduce tu contraseña" required>
+
+                    <button type="submit">Crear Cuenta</button>
+                    <br>
+                    <button type="button" onclick="location.href='{% url 'inicio' %}'">Volver atrás</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Dulces Helados. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

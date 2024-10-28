@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Heladería{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="icon" href="{% static 'dulces-helados-icono.ico' %}" type="image/x-icon"> <!-- Agrega esta línea -->
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <a href="{% url 'inicio' %}">Dulces helados</a>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'inicio' %}">Inicio</a>
+            <a href="{% url 'login' %}">Iniciar sesión</a> <!-- Botón de inicio de sesión -->
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Dulces helados. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Pedidos</title>
+    <link rel="icon" href="../../static/dulces-helados-icono.ico" type="image/x-icon">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: url('../../static/fondo1.png');
+            background-size: cover;
+            background-position: center;      
+        }
+
+        /* Navbar styles */
+        nav {
+            background-color: #ff69b4; /* Color rosa */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            height: 5vh;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            margin-right: 25px;
+            padding: 10px 15px;            
+        }
+
+        nav a:hover {
+            color: #ff1493; /* Hover de color rosa más oscuro */
+        }
+
+        .icono {
+            margin-top: 5px;
+            width: 75px;
+            margin-left: 15px;
+            height: auto;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            margin-top: 50px; /* Espacio para la navbar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Styles for filters */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .filtros input {
+            margin: 0 10px;
+            padding: 10px;
+            border: 2px solid #ff69b4;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        /* Styles for pedidos */
+        .pedido {
+            width: 90%;
+            background-color: #fff;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pedido:hover {
+            transform: scale(1.02); /* Pequeño zoom al pasar el ratón */
+        }
+
+        .pedido p {
+            margin: 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .pedido .entregado-button {
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button {
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pedido .entregado-button:hover {
+            background-color: #ffccdd; /* Cambia a un rosa más claro */
+        }
+
+        .button:hover {
+            background-color: #ffccdd; /* Cambia a un rosa más claro */
+        }
+        /* Footer styles */
+        footer {
+            background-color: #ff69b4; /* Color rosa */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .pedido p {
+                font-size: 0.9em;
+            }
+
+            .pedido .entregado-button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+            .button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+        @media (max-width: 480px) {
+            .pedido p {
+                font-size: 0.8em;
+            }
+
+            .pedido .entregado-button {
+                padding: 7px 12px;
+                font-size: 0.8em;
+            }
+
+            .button {
+                padding: 7px 12px;
+                font-size: 0.8em;
+            }            
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <img src="../../static/dulces-helados-logo.png" alt="Heladería" class="icono" onclick="location.href='{% url 'general_empleado' %}'">
+        </div>
+        <div>
+            <button class="button" onclick="location.href='{% url 'crear_pedido' %}'">Agregar pedidos</button>
+            <a href="{% url 'inicio' %}">Salir</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <h1>Pedidos Pendientes</h1>
+
+        <!-- Filtros -->
+        <div class="filtros">
+            <input type="text" id="clienteFiltro" placeholder="Filtrar por Cliente" oninput="filtrarPedidos()">
+            <input type="text" id="heladoFiltro" placeholder="Filtrar por Helado" oninput="filtrarPedidos()">
+            <input type="text" id="salsaFiltro" placeholder="Filtrar por Salsa" oninput="filtrarPedidos()">
+            <input type="text" id="cantidadFiltro" placeholder="Filtrar por Cantidad" oninput="filtrarPedidos()">
+        </div>
+
+        <!-- Lista de pedidos -->
+        {% for pedido in pedidos %}
+        <div class="pedido" data-cliente="{{ pedido.cliente }}" data-helado="{{ pedido.helado }}" data-salsa="{{ pedido.salsa }}" data-cantidad="{{ pedido.cantidad }}">
+            <p>{{ pedido.cliente }} ha pedido {{ pedido.cantidad }} de helado sabor {{ pedido.helado }} con salsa de {{ pedido.salsa }}</p>
+            <button class="entregado-button" onclick="confirmarEntrega('{{ pedido.id }}')">Entregado</button>
+        </div>
+        {% empty %}
+        <p>No hay pedidos pendientes.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Dulces Helados. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script de confirmación con SweetAlert2 -->
+    <script>
+        function confirmarEntrega(id) {
+            Swal.fire({
+                title: '¿Ya entregó su pedido?',
+                text: "¡No podrá revertir esta acción!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, entregado',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirige para borrar el pedido si confirma
+                    window.location.href = "{% url 'borrar_pedido' 0 %}".replace('0', id);
+                }
+            });
+        }
+
+        function filtrarPedidos() {
+            const clienteFiltro = document.getElementById('clienteFiltro').value.toLowerCase();
+            const heladoFiltro = document.getElementById('heladoFiltro').value.toLowerCase();
+            const salsaFiltro = document.getElementById('salsaFiltro').value.toLowerCase();
+            const cantidadFiltro = document.getElementById('cantidadFiltro').value.toLowerCase();
+
+            const pedidos = document.querySelectorAll('.pedido');
+            pedidos.forEach(pedido => {
+                const cliente = pedido.getAttribute('data-cliente').toLowerCase();
+                const helado = pedido.getAttribute('data-helado').toLowerCase();
+                const salsa = pedido.getAttribute('data-salsa').toLowerCase();
+                const cantidad = pedido.getAttribute('data-cantidad').toLowerCase();
+
+                if ((clienteFiltro === "" || cliente.includes(clienteFiltro)) &&
+                    (heladoFiltro === "" || helado.includes(heladoFiltro)) &&
+                    (salsaFiltro === "" || salsa.includes(salsaFiltro)) &&
+                    (cantidadFiltro === "" || cantidad === cantidadFiltro)) {
+                    pedido.style.display = '';
+                } else {
+                    pedido.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
